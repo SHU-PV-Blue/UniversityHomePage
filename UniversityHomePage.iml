@@ -27,6 +27,7 @@
       <configuration>
         <datasource-map />
         <naming-strategy-map />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
       </configuration>
     </facet>
   </component>
@@ -40,5 +41,6 @@
     <orderEntry type="library" name="Spring-4.3.1.RELEASE" level="project" />
     <orderEntry type="library" name="Hibernate 4.2.2-4.2.2" level="project" />
     <orderEntry type="library" name="Struts 2-2.3.20.1" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:6.0.3" level="project" />
   </component>
 </module>
