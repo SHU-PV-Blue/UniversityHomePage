@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="UniversityHomePage:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/UniversityHomePage_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="UniversityHomePage/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="UniversityHomePage" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Spring-4.3.1.RELEASE" />
+          <element id="library" level="project" name="Hibernate 4.2.2-4.2.2" />
+          <element id="library" level="project" name="Struts 2-2.3.20.1" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
