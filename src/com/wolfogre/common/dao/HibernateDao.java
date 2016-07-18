@@ -10,6 +10,11 @@ import java.io.Serializable;
 public class HibernateDao<T> implements Daoable<T>{
     // DAO组件进行持久化操作底层依赖的SessionFactory组件
     private SessionFactory sessionFactory;
+
+    public HibernateDao(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
+
     // 依赖注入SessionFactory所需的setter方法
     public void setSessionFactory(SessionFactory sessionFactory)
     {
