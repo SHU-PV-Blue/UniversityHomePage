@@ -12,6 +12,5 @@
   </head>
   <body>
     主页
-  <%=request.getAttribute("test")%>
   </body>
 </html>
