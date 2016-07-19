@@ -1,5 +1,8 @@
 package com.wolfogre.common.dao;
 import org.hibernate.*;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 
 import java.util.List;
 import java.io.Serializable;
@@ -10,6 +13,11 @@ import java.io.Serializable;
 public class HibernateDao<T> implements Daoable<T>{
     // DAO组件进行持久化操作底层依赖的SessionFactory组件
     private SessionFactory sessionFactory;
+    public HibernateDao(){
+        Configuration configuration = new Configuration().configure();
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+    }
     // 依赖注入SessionFactory所需的setter方法
     public void setSessionFactory(SessionFactory sessionFactory)
     {
@@ -76,7 +84,7 @@ public class HibernateDao<T> implements Daoable<T>{
     @SuppressWarnings("unchecked")
     protected List<T> find(String hql)
     {
-        return (List<T>)getSessionFactory().getCurrentSession()
+        return (List<T>)getSessionFactory().openSession()
                 .createQuery(hql)
                 .list();
     }
