@@ -12,6 +12,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/library/jquery/jquery.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/library/datatables/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/library/datatables/js/dataTables.bootstrap.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/library/bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/index.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/library/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/library/datatables/css/dataTables.bootstrap.css">
@@ -19,8 +20,6 @@
     <title>asdf</title>
   </head>
   <body>
-    主页
-  <%=request.getAttribute("test")%>
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
       <thead>
       <tr>
@@ -48,7 +47,10 @@
         <%
         } else {
         %>
-        <td><a href="<%="assets/images/" + it.getImagePath()%>">view</a></a></td>
+        <td class="text-center">
+          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" style="width: 80%"
+                  data-name="<%=it.getName()%>" data-image="<%=it.getImagePath()%> ">查看</button>
+        </td>
         <%
           }
         %>
@@ -80,5 +82,22 @@
       %>
       </tbody>
     </table>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                </div>
+                <div class="modal-body">
+                    <img id="page-img" width="100%" height="auto" src=""/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
   </body>
 </html>
