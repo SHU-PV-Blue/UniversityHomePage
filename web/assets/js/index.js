@@ -11,8 +11,8 @@ $(document).ready(function() {
         // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this)
         modal.find('.modal-title').text(name)
-        var test = modal.find('#page-img')
-        test.attr("src",image)
+        modal.find('#page-img').attr("src","")
+        modal.find('#page-img').attr("src",image)
     });
 } );
 
