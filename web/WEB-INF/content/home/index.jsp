@@ -48,7 +48,7 @@
         <%
         } else {
         %>
-        <td><%=it.getImagePath()%></td>
+        <td><a href="<%="assets/images/" + it.getImagePath()%>">view</a></a></td>
         <%
           }
         %>
