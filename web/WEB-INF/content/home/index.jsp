@@ -16,8 +16,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/index.js"></script>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/library/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/library/datatables/css/dataTables.bootstrap.css">
-
-    <title>asdf</title>
+    <link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico">
+    <title>大学主页速览</title>
   </head>
   <body>
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
