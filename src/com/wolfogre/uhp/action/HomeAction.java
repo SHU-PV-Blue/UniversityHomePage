@@ -11,7 +11,7 @@ import com.wolfogre.uhp.domain.HomePageEntity;
 public class HomeAction extends ActionSupport{
     public String index(){
         ActionContext actionContext = ActionContext.getContext();
-        actionContext.put("test", new HibernateDao<HomePageEntity>().findCount(HomePageEntity.class));
+        actionContext.put("universityList", new HibernateDao<HomePageEntity>().findAll(HomePageEntity.class));
         return SUCCESS;
     }
 }
