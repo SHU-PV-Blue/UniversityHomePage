@@ -20,7 +20,12 @@ $(document).ready(function() {
             modal.find('.modal-dialog').removeClass('modal-sm');
             modal.find('.modal-dialog').addClass('modal-lg');
         }
-
+        Countly.q.push(['add_event',{
+            key:"visitUniversity",
+            "segmentation": {
+                "name": name
+            }
+        }]);
     });
 } );
 
