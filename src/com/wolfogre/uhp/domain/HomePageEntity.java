@@ -1,9 +1,10 @@
 package com.wolfogre.uhp.domain;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 /**
- * Created by wolfogre on 16-7-18.
+ * Created by wolfogre on 16-7-22.
  */
 @Entity
 @Table(name = "homepage", schema = "universityhomepage", catalog = "")
@@ -11,9 +12,10 @@ public class HomePageEntity {
     private int id;
     private String name;
     private String url;
-    private String mobileUrl;
     private String imagePath;
     private String mobileImagePath;
+    private byte[] layoutImage;
+    private String content;
 
     @Id
     @Column(name = "Id")
@@ -46,16 +48,6 @@ public class HomePageEntity {
     }
 
     @Basic
-    @Column(name = "MobileUrl")
-    public String getMobileUrl() {
-        return mobileUrl;
-    }
-
-    public void setMobileUrl(String mobileUrl) {
-        this.mobileUrl = mobileUrl;
-    }
-
-    @Basic
     @Column(name = "ImagePath")
     public String getImagePath() {
         return imagePath;
@@ -75,6 +67,26 @@ public class HomePageEntity {
         this.mobileImagePath = mobileImagePath;
     }
 
+    @Basic
+    @Column(name = "LayoutImage", columnDefinition="mediumblob")
+    public byte[] getLayoutImage() {
+        return layoutImage;
+    }
+
+    public void setLayoutImage(byte[] layoutImage) {
+        this.layoutImage = layoutImage;
+    }
+
+    @Basic
+    @Column(name = "Content")
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -85,10 +97,11 @@ public class HomePageEntity {
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (url != null ? !url.equals(that.url) : that.url != null) return false;
-        if (mobileUrl != null ? !mobileUrl.equals(that.mobileUrl) : that.mobileUrl != null) return false;
         if (imagePath != null ? !imagePath.equals(that.imagePath) : that.imagePath != null) return false;
         if (mobileImagePath != null ? !mobileImagePath.equals(that.mobileImagePath) : that.mobileImagePath != null)
             return false;
+        if (!Arrays.equals(layoutImage, that.layoutImage)) return false;
+        if (content != null ? !content.equals(that.content) : that.content != null) return false;
 
         return true;
     }
@@ -98,9 +111,10 @@ public class HomePageEntity {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
-        result = 31 * result + (mobileUrl != null ? mobileUrl.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         result = 31 * result + (mobileImagePath != null ? mobileImagePath.hashCode() : 0);
+        result = 31 * result + Arrays.hashCode(layoutImage);
+        result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
     }
 }

@@ -24,11 +24,11 @@
       <thead>
       <tr>
         <th class="text-center">编号</th>
-        <th class="text-center">大学</th>
-        <th class="text-center">主页</th>
-        <th class="text-center">主页图</th>
-        <th class="text-center">移动版主页</th>
-        <th class="text-center">移动版主页图</th>
+        <th class="text-center">大学名称</th>
+        <th class="text-center">主页地址</th>
+        <th class="text-center">主页截图</th>
+        <th class="text-center">桌面版主页布局</th>
+        <th class="text-center">主页内容</th>
       </tr>
       </thead>
       <tbody>
@@ -38,41 +38,36 @@
       %>
       <tr>
         <td class="text-center"><%=it.getId()%></td>
+
         <td><%=it.getName()%></td>
+
         <td><a href="<%="http://" + it.getUrl()%>" target="_blank"><%=it.getUrl()%></a></td>
-        <%
-          if(it.getImagePath() == null){
-        %>
-        <td class="text-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
-        <%
-        } else {
-        %>
+
         <td class="text-center">
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" style="width: 80%"
-                  data-name="<%=it.getName()%>" data-image="<%=it.getImagePath()%> ">查看</button>
+          <button type="button" class="btn btn-success" <%=it.getImagePath() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
+                  data-name="<%=it.getName()%>" data-image="<%=it.getImagePath()%> ">桌面版</button>
+          <button type="button" class="btn btn-info" <%=it.getMobileImagePath() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
+                  data-name="<%=it.getName()%>" data-image="<%=it.getMobileImagePath()%>" data-mobile="true">移动版</button>
         </td>
         <%
-          }
-        %>
-        <%
-          if(it.getMobileUrl() == null){
+          if(it.getLayoutImage() == null){
         %>
         <td class="text-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
         <%
         } else {
         %>
-        <td><%=it.getMobileUrl()%></td>
+        <td>建设中...</td>
         <%
           }
         %>
         <%
-          if(it.getMobileImagePath() == null){
+          if(it.getContent() == null){
         %>
         <td class="text-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
         <%
         } else {
         %>
-        <td><%=it.getMobileImagePath()%></td>
+        <td><%=it.getContent()%></td>
         <%
           }
         %>
@@ -84,7 +79,7 @@
     </table>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

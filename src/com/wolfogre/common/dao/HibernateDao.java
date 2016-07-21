@@ -84,6 +84,7 @@ public class HibernateDao<T> implements Daoable<T>{
     @SuppressWarnings("unchecked")
     protected List<T> find(String hql)
     {
+        //TODO: Should not use openSession
         return (List<T>)getSessionFactory().openSession()
                 .createQuery(hql)
                 .list();
