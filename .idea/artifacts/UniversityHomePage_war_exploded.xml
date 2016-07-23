@@ -10,6 +10,7 @@
           <element id="library" level="project" name="Hibernate 4.2.2-4.2.2" />
           <element id="library" level="project" name="Struts 2-2.3.20.1" />
           <element id="library" level="project" name="mysql:mysql-connector-java:6.0.3" />
+          <element id="library" level="project" name="org.apache.struts:struts2-json-plugin:2.3.28.1" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="UniversityHomePage/web/Web" />
