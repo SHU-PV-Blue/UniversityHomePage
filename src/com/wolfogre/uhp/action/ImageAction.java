@@ -4,14 +4,12 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.wolfogre.common.HibernateTool;
 import com.wolfogre.uhp.domain.HomePageEntity;
-import org.apache.struts2.ServletActionContext;
+import com.wolfogre.uhp.domain.LayoutImageEntity;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.Arrays;
-import java.util.Map;
 
 /**
  * Created by wolfogre on 16-7-24.
@@ -75,9 +73,20 @@ public class ImageAction  extends ActionSupport {
         fis.close();
 
         HibernateTool hibernateTool = new HibernateTool();
-        HomePageEntity aim = (HomePageEntity)hibernateTool.get(HomePageEntity.class, Integer.parseInt(getUniversityId()));
         byte[] image = Arrays.copyOfRange(buffer,0, length);
-        aim.setLayoutImage(image);
+        LayoutImageEntity aimLayout = (LayoutImageEntity)hibernateTool.get(LayoutImageEntity.class, Integer.parseInt(getUniversityId()));
+        if(aimLayout != null){
+            aimLayout.setImage(image);
+            hibernateTool.update(aimLayout);
+        } else {
+            aimLayout = new LayoutImageEntity();
+            aimLayout.setId(Integer.parseInt(getUniversityId()));
+            aimLayout.setImage(image);
+            hibernateTool.save(aimLayout);
+        }
+
+        HomePageEntity aim = (HomePageEntity)hibernateTool.get(HomePageEntity.class, Integer.parseInt(getUniversityId()));
+        aim.setIfLayoutImage(true);
         hibernateTool.update(aim);
 
         actionContext.put("success", true);
@@ -89,8 +98,8 @@ public class ImageAction  extends ActionSupport {
     public String download() throws Exception
     {
         HibernateTool hibernateTool = new HibernateTool();
-        HomePageEntity aim = (HomePageEntity)hibernateTool.get(HomePageEntity.class, Integer.parseInt(getUniversityId()));
-        this.inputStream = new ByteArrayInputStream(aim.getLayoutImage());
+        LayoutImageEntity aim = (LayoutImageEntity)hibernateTool.get(LayoutImageEntity.class, Integer.parseInt(getUniversityId()));
+        this.inputStream = new ByteArrayInputStream(aim.getImage());
         return SUCCESS;
     }
 }

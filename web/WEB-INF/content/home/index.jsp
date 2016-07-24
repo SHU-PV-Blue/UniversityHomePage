@@ -55,13 +55,13 @@
           <%
             if(session.getAttribute("admin") == null || !(boolean)session.getAttribute("admin")) {
           %>
-          <button type="button" class="btn btn-success" <%=it.getLayoutImage() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 80%"
-                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%>">查看</button>
+          <button type="button" class="btn btn-success" <%=!it.getIfLayoutImage() ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 80%"
+                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%>" data-mobile="true"><!--只是为了小点-->查看</button>
           <%} else { %>
-          <button type="button" class="btn btn-success" <%=it.getLayoutImage() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 45%"
-                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%>">查看</button>
+          <button type="button" class="btn btn-success" <%=!it.getIfLayoutImage()? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 45%"
+                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%> "data-mobile="true"><!--只是为了小点-->查看</button>
           <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#uploadModal" style="width: 45%"
-                  data-name="<%=it.getName()%>" data-id="<%=it.getId()%>"">上传</button>
+                  data-name="<%=it.getName()%>" data-id="<%=it.getId()%>">上传</button>
           <%}%>
         </td>
 

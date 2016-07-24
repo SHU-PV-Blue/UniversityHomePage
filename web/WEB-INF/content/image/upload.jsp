@@ -20,6 +20,7 @@
     %>
     <p>你成功上传了<%=request.getAttribute("name").toString()%>的主页布局图，</p>
     <p>辛苦哒！</p>
+    <p>为了查看你上传的最新图片，记得强制刷新哟！</p>
     <%
         } else {
     %>

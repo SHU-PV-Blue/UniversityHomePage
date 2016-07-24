@@ -1,10 +1,11 @@
 package com.wolfogre.uhp.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
-import java.util.Arrays;
 
 /**
- * Created by wolfogre on 16-7-22.
+ * Created by wolfogre on 16-7-25.
  */
 @Entity
 @Table(name = "homepage", schema = "universityhomepage", catalog = "")
@@ -14,7 +15,7 @@ public class HomePageEntity {
     private String url;
     private String imagePath;
     private String mobileImagePath;
-    private byte[] layoutImage;
+    private Boolean ifLayoutImage;
     private String content;
 
     @Id
@@ -68,13 +69,14 @@ public class HomePageEntity {
     }
 
     @Basic
-    @Column(name = "LayoutImage", columnDefinition="mediumblob")
-    public byte[] getLayoutImage() {
-        return layoutImage;
+    @Column(name = "IfLayoutImage")
+    @Type(type = "org.hibernate.type.TrueFalseType")
+    public Boolean getIfLayoutImage() {
+        return ifLayoutImage;
     }
 
-    public void setLayoutImage(byte[] layoutImage) {
-        this.layoutImage = layoutImage;
+    public void setIfLayoutImage(Boolean ifLayoutImage) {
+        this.ifLayoutImage = ifLayoutImage;
     }
 
     @Basic
@@ -100,7 +102,8 @@ public class HomePageEntity {
         if (imagePath != null ? !imagePath.equals(that.imagePath) : that.imagePath != null) return false;
         if (mobileImagePath != null ? !mobileImagePath.equals(that.mobileImagePath) : that.mobileImagePath != null)
             return false;
-        if (!Arrays.equals(layoutImage, that.layoutImage)) return false;
+        if (ifLayoutImage != null ? !ifLayoutImage.equals(that.ifLayoutImage) : that.ifLayoutImage != null)
+            return false;
         if (content != null ? !content.equals(that.content) : that.content != null) return false;
 
         return true;
@@ -113,7 +116,7 @@ public class HomePageEntity {
         result = 31 * result + (url != null ? url.hashCode() : 0);
         result = 31 * result + (imagePath != null ? imagePath.hashCode() : 0);
         result = 31 * result + (mobileImagePath != null ? mobileImagePath.hashCode() : 0);
-        result = 31 * result + Arrays.hashCode(layoutImage);
+        result = 31 * result + (ifLayoutImage != null ? ifLayoutImage.hashCode() : 0);
         result = 31 * result + (content != null ? content.hashCode() : 0);
         return result;
     }
