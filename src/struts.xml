@@ -5,21 +5,10 @@
         "http://struts.apache.org/dtds/struts-2.3.dtd">
 
 <struts>
-
-
-
     <package name="com.wolfogre.uhp.action.Home" extends="struts-default" namespace="/">
         <default-action-ref name="index"/>
         <action name="index" class="com.wolfogre.uhp.action.HomeAction" method="index">
             <result>/WEB-INF/content/home/index.jsp</result>
-        </action>
-        <action name="getMD5" class="com.wolfogre.uhp.action.HomeAction" method="getMD5">
-        </action>
-    </package>
-    <package name="com.wolfogre.uhp.action.Content" extends="struts-default" namespace="/content">
-        <action name="get" class="com.wolfogre.uhp.action.ContentAction" method="get">
-        </action>
-        <action name="getMD5" class="com.wolfogre.uhp.action.ContentAction" method="set">
         </action>
     </package>
 </struts>

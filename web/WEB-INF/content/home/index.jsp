@@ -60,12 +60,17 @@
         <%
           }
         %>
-
-        <td>
-          <input type="text" class="form-control content" value="<%=it.getContent() == null ? "" : it.getContent()%>" style="width:80%">
-          <button type="button" class="btn btn-warning content-update" disabled="disabled" style="width:15%">更新</button>
-        </td>
-
+        <%
+          if(it.getContent() == null){
+        %>
+        <td class="text-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
+        <%
+        } else {
+        %>
+        <td><%=it.getContent()%></td>
+        <%
+          }
+        %>
       </tr>
       <%
         }
