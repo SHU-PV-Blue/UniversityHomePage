@@ -37,7 +37,7 @@ $(document).ready(function() {
         Countly.q.push(['add_event',{
             key:"uploadLayout",
             "segmentation": {
-                "name": name
+                "name": button.data('name')
             }
         }]);
     });
