@@ -50,6 +50,7 @@ $(document).ready(function() {
         var thisButtun = $(this);
         thisButtun.text("稍等");
         var aimId = thisButtun.data("id");
+        var aimName = thisButtun.data("name");
         var aimValue = $(this).parent().find('.content').val();
         $.ajax({
             type: "GET",
@@ -59,9 +60,23 @@ $(document).ready(function() {
             success: function(data){
                 if(!data.success){
                     thisButtun.text("更新");
+                    Countly.q.push(['add_event',{
+                        key:"updateContent",
+                        "segmentation": {
+                            "name": aimName,
+                            "result" : data.reason
+                        }
+                    }]);
                     alert("错误:" + data.reason);
                     return;
                 }
+                Countly.q.push(['add_event',{
+                    key:"updateContent",
+                    "segmentation": {
+                        "name": aimName,
+                        "result" : "success"
+                    }
+                }]);
                 thisButtun.text("更新");
                 thisButtun.attr('disabled', 'disabled');
             }

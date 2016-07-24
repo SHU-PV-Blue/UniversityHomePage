@@ -76,7 +76,7 @@
         %>
         <td>
           <input type="text" class="form-control content" value="<%=it.getContent() == null ? "" : it.getContent()%>" style="width:80%">
-          <button type="button" class="btn btn-warning content-update" disabled="disabled" data-id="<%=it.getId()%>"style="width:15%">更新</button>
+          <button type="button" class="btn btn-warning content-update" disabled="disabled" data-id="<%=it.getId()%>" data-name="<%=it.getName()%>" style="width:15%">更新</button>
         </td>
         <%
           }
