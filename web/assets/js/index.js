@@ -35,11 +35,23 @@ $(document).ready(function() {
     $('.content-update').bind('click',function (event) {
         var thisButtun = $(this);
         thisButtun.text("稍等");
-        setTimeout(function () {
-            thisButtun.text("更新");
-            thisButtun.attr('disabled', 'disabled');
-        }, 1000);
-
+        var aimId = thisButtun.data("id");
+        var aimValue = $(this).parent().find('.content').val();
+        $.ajax({
+            type: "GET",
+            url: "content/set",
+            data: {id:aimId, value:aimValue},
+            dataType: "json",
+            success: function(data){
+                if(!data.success){
+                    thisButtun.text("更新");
+                    alert("错误:" + data.reason);
+                    return;
+                }
+                thisButtun.text("更新");
+                thisButtun.attr('disabled', 'disabled');
+            }
+        });
     });
 
 } );

@@ -62,7 +62,7 @@ public class HibernateTool {
      * @return 指定的持久化对象
      */
     public List getAll(Class type) throws Exception {
-        return query(type, "select en from " + type.getSimpleName() + " en");
+        return session.createQuery("select en from " + type.getSimpleName() + " en").list();
     }
 
     /**

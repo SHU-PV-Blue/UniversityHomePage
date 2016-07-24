@@ -61,11 +61,23 @@
           }
         %>
 
+
+        <%
+          if(session.getAttribute("admin") == null || !(boolean)session.getAttribute("admin")) {
+        %>
+        <td>
+          <input type="text" class="form-control content" value="<%=it.getContent() == null ? "" : it.getContent()%>" style="width:100%" readonly="readonly">
+        </td>
+        <%
+          } else {
+        %>
         <td>
           <input type="text" class="form-control content" value="<%=it.getContent() == null ? "" : it.getContent()%>" style="width:80%">
-          <button type="button" class="btn btn-warning content-update" disabled="disabled" style="width:15%">更新</button>
+          <button type="button" class="btn btn-warning content-update" disabled="disabled" data-id="<%=it.getId()%>"style="width:15%">更新</button>
         </td>
-
+        <%
+          }
+        %>
       </tr>
       <%
         }

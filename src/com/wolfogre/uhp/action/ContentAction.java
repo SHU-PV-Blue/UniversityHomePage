@@ -1,5 +1,6 @@
 package com.wolfogre.uhp.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.wolfogre.common.HibernateTool;
 import com.wolfogre.uhp.domain.HomePageEntity;
@@ -10,7 +11,7 @@ import org.apache.struts2.ServletActionContext;
  */
 public class ContentAction extends ActionSupport {
     private String id;
-    private String content;
+    private String value;
     public String getId() {
         return id;
     }
@@ -19,23 +20,29 @@ public class ContentAction extends ActionSupport {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getValue() {
+        return value;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     public String set() throws Exception{
-        //TODO:检查是否登陆
+        ActionContext actionContext = ActionContext.getContext();
+        if(actionContext.getSession().get("admin") == null || !(boolean)actionContext.getSession().get("admin")){
+            String jsonString = "{\"success\":false, \"reason\":\"Not Admin\"}";
+            ServletActionContext.getResponse().getWriter().println(jsonString);
+            return null;
+        }
+
         HibernateTool hDao = new HibernateTool();
         try{
             HomePageEntity aim = (HomePageEntity)hDao.get(HomePageEntity.class, Integer.parseInt(getId()));
-            aim.setContent(getContent());
+            aim.setContent(getValue());
             hDao.update(aim);
         } catch (Exception e) {
-            String jsonString = "{\"result\":\"fail\", \"reason\":\"" + e.getMessage() + "\"}";
+            String jsonString = "{\"success\":false, \"reason\":\"" + e.getMessage() + "\"}";
             ServletActionContext.getResponse().getWriter().println(jsonString);
             return null;
         }

@@ -28,9 +28,7 @@ public class HomeAction extends ActionSupport{
         ActionContext actionContext = ActionContext.getContext();
         actionContext.put("universityList", new HibernateTool().getAll(HomePageEntity.class));
         if(getAdmin() != null && "df8c608611d9139055f0ffb5cd79d0db".equals(getMD5(getAdmin())))
-            actionContext.put("admin", true);
-        else
-            actionContext.put("admin", false);
+            actionContext.getSession().put("admin", true);
         return SUCCESS;
     }
 
