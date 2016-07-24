@@ -14,8 +14,7 @@
         <configuration>
           <fileset id="s2fileset" name="Default File Set " removed="false">
             <file>file://$MODULE_DIR$/src/struts.xml</file>
-            <file>jar://$MODULE_DIR$/lib/struts2-json-plugin-2.3.28.1.jar!/struts-plugin.xml</file>
-            <file>jar://$MODULE_DIR$/lib/struts2-core-2.3.28.1.jar!/struts-default.xml</file>
+            <file>jar://$MODULE_DIR$/lib/struts2-core.jar!/struts-default.xml</file>
           </fileset>
           <propertiesKeys disabled="false" />
         </configuration>
@@ -42,6 +41,5 @@
     <orderEntry type="library" name="Struts 2-2.3.20.1" level="project" />
     <orderEntry type="library" name="mysql:mysql-connector-java:6.0.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M9" level="application_server_libraries" />
-    <orderEntry type="library" name="org.apache.struts:struts2-json-plugin:2.3.28.1" level="project" />
   </component>
 </module>

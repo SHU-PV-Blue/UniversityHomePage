@@ -11,11 +11,4 @@
             <result>/WEB-INF/content/home/index.jsp</result>
         </action>
     </package>
-    <package name="com.wolfogre.uhp.action.Image" extends="struts-default,json-default" namespace="/image">
-        <action name="upload" class="com.wolfogre.uhp.action.ImageAction" method="upload">
-            <result type="json">
-                <param name="root">dataMap</param>
-            </result>
-        </action>
-    </package>
 </struts>
