@@ -20,7 +20,7 @@
     <title>大学主页速览</title>
   </head>
   <body>
-    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <table id="example" class="table table-striped table-bordered center-block" cellspacing="0" width="100%" style="visibility: hidden">
       <thead>
       <tr>
         <th class="text-center" width="2%"></th>
