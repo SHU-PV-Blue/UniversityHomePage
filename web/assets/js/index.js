@@ -27,6 +27,21 @@ $(document).ready(function() {
             }
         }]);
     });
+
+    $('.content').bind('input propertychange',function (event) {
+        $(this).parent().find('.content-update').removeAttr('disabled');
+    });
+
+    $('.content-update').bind('click',function (event) {
+        var thisButtun = $(this);
+        thisButtun.text("稍等");
+        setTimeout(function () {
+            thisButtun.text("更新");
+            thisButtun.attr('disabled', 'disabled');
+        }, 1000);
+
+    });
+
 } );
 
 //some default pre init
