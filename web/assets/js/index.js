@@ -35,7 +35,7 @@ $(document).ready(function() {
         $(this).find('#uName').val(button.data('name'));
         $(this).find('#universityId').val(button.data('id'));
         Countly.q.push(['add_event',{
-            key:"uploadLayoutImage",
+            key:"uploadLayout",
             "segmentation": {
                 "name": name
             }
