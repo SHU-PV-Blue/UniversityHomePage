@@ -1,72 +1,96 @@
 package com.wolfogre.uhp.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.wolfogre.common.HibernateTool;
+import com.wolfogre.uhp.domain.HomePageEntity;
 import org.apache.struts2.ServletActionContext;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.Arrays;
 import java.util.Map;
 
 /**
  * Created by wolfogre on 16-7-24.
  */
 public class ImageAction  extends ActionSupport {
-    // 封装文件标题请求参数的属性
-    private String title;
+
     // 封装上传文件域的属性
-    private File upload;
-    // 封装上传文件类型的属性
-    private String uploadContentType;
-    // 封装上传文件名的属性
-    private String uploadFileName;
+    private File uploadFile;
 
-    public String getTitle() {
-        return title;
+    private String universityId;
+
+    private ByteArrayInputStream inputStream;
+
+    public File getUploadFile() {
+        return uploadFile;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setUploadFile(File uploadFile) {
+        this.uploadFile = uploadFile;
     }
 
-    public File getUpload() {
-        return upload;
+    public String getUniversityId() {
+        return universityId;
     }
 
-    public void setUpload(File upload) {
-        this.upload = upload;
+    public void setUniversityId(String universityId) {
+        this.universityId = universityId;
     }
 
-    public String getUploadContentType() {
-        return uploadContentType;
+    public ByteArrayInputStream getInputStream() {
+        return inputStream;
     }
 
-    public void setUploadContentType(String uploadContentType) {
-        this.uploadContentType = uploadContentType;
+    public void setInputStream(ByteArrayInputStream inputStream) {
+        this.inputStream = inputStream;
     }
 
-    public String getUploadFileName() {
-        return uploadFileName;
-    }
-
-    public void setUploadFileName(String uploadFileName) {
-        this.uploadFileName = uploadFileName;
-    }
-
-
-    public void upload() throws Exception
+    public String upload() throws Exception
     {
-        if(getUpload() != null){
-            FileInputStream fis = new FileInputStream(getUpload());
-            byte[] buffer = new byte[1024];
-            int len = 0;
-            while ((len = fis.read(buffer)) > 0)
-            {
-                //TODO
-            }
-            fis.close();
+        ActionContext actionContext = ActionContext.getContext();
+        if(actionContext.getSession().get("admin") == null || !(boolean)actionContext.getSession().get("admin")){
+            actionContext.put("success", false);
+            actionContext.put("reason", "权限不足");
+            return SUCCESS;
         }
-        String jsonString="{\"result\":\"success\"}";
-        ServletActionContext.getResponse().getWriter().println(jsonString);
-        return;
+
+        if(getUploadFile() == null || getUniversityId() == null){
+            actionContext.put("success", false);
+            actionContext.put("reason", "文件或参数缺失");
+            return SUCCESS;
+        }
+
+        FileInputStream fis = new FileInputStream(getUploadFile());
+        byte[] buffer = new byte[1024 * 1024];
+        int length = fis.read(buffer, 0, 1024 * 1024);
+        if(length >= 1024 * 1024){
+            actionContext.put("success", false);
+            actionContext.put("reason", "文件大于 1 MB");
+            return SUCCESS;
+        }
+        fis.close();
+
+        HibernateTool hibernateTool = new HibernateTool();
+        HomePageEntity aim = (HomePageEntity)hibernateTool.get(HomePageEntity.class, Integer.parseInt(getUniversityId()));
+        byte[] image = Arrays.copyOfRange(buffer,0, length);
+        aim.setLayoutImage(image);
+        hibernateTool.update(aim);
+
+        actionContext.put("success", true);
+        actionContext.put("name", aim.getName());
+
+        return SUCCESS;
+    }
+
+    public String download() throws Exception
+    {
+        HibernateTool hibernateTool = new HibernateTool();
+        HomePageEntity aim = (HomePageEntity)hibernateTool.get(HomePageEntity.class, Integer.parseInt(getUniversityId()));
+        this.inputStream = new ByteArrayInputStream(aim.getLayoutImage());
+        return SUCCESS;
     }
 }

@@ -3,6 +3,7 @@
  */
 $(document).ready(function() {
     $('#example').DataTable();
+    
     $('#exampleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget); // Button that triggered the modal
         var name = button.data('name'); // Extract info from data-* attributes
@@ -22,6 +23,19 @@ $(document).ready(function() {
         }
         Countly.q.push(['add_event',{
             key:"visitUniversity",
+            "segmentation": {
+                "name": name
+            }
+        }]);
+    });
+
+    $('#uploadModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var uId = button.data('id');
+        $(this).find('#uName').val(button.data('name'));
+        $(this).find('#universityId').val(button.data('id'));
+        Countly.q.push(['add_event',{
+            key:"uploadLayoutImage",
             "segmentation": {
                 "name": name
             }

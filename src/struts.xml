@@ -16,10 +16,23 @@
         <action name="getMD5" class="com.wolfogre.uhp.action.HomeAction" method="getMD5">
         </action>
     </package>
+
     <package name="com.wolfogre.uhp.action.Content" extends="struts-default" namespace="/content">
         <action name="get" class="com.wolfogre.uhp.action.ContentAction" method="get">
         </action>
         <action name="set" class="com.wolfogre.uhp.action.ContentAction" method="set">
+        </action>
+    </package>
+
+    <package name="com.wolfogre.uhp.action.Image" extends="struts-default" namespace="/image">
+        <action name="upload" class="com.wolfogre.uhp.action.ImageAction" method="upload">
+            <result>/WEB-INF/content/image/upload.jsp</result>
+        </action>
+        <action name="download" class="com.wolfogre.uhp.action.ImageAction" method="download">
+            <result type="stream">
+                <param name="contentType">image/jpeg</param>
+                <param name="inputName">inputStream</param>
+            </result>
         </action>
     </package>
 </struts>

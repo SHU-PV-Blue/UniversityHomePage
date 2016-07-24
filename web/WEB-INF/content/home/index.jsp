@@ -23,12 +23,12 @@
     <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
       <thead>
       <tr>
-        <th class="text-center">编号</th>
-        <th class="text-center">大学名称</th>
-        <th class="text-center">主页地址</th>
-        <th class="text-center">主页截图</th>
-        <th class="text-center">桌面版主页布局</th>
-        <th class="text-center">主页内容</th>
+        <th class="text-center" width="2%"></th>
+        <th class="text-center" width="15%">大学名称</th>
+        <th class="text-center" width="10%">网址</th>
+        <th class="text-center" width="16%">截图</th>
+        <th class="text-center" width="8%">布局</th>
+        <th class="text-center">板块</th>
       </tr>
       </thead>
       <tbody>
@@ -44,23 +44,26 @@
         <td><a href="<%="http://" + it.getUrl()%>" target="_blank"><%=it.getUrl()%></a></td>
 
         <td class="text-center">
-          <button type="button" class="btn btn-success" <%=it.getImagePath() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
+          <button type="button" class="btn btn-success" <%=it.getImagePath() == null || it.getImagePath().isEmpty() ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
                   data-name="<%=it.getName()%>" data-image="<%=it.getImagePath()%> ">桌面版</button>
-          <button type="button" class="btn btn-info" <%=it.getMobileImagePath() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
+          <button type="button" class="btn btn-info" <%=it.getMobileImagePath() == null || it.getMobileImagePath().isEmpty() ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 40%"
                   data-name="<%=it.getName()%>" data-image="<%=it.getMobileImagePath()%>" data-mobile="true">移动版</button>
         </td>
-        <%
-          if(it.getLayoutImage() == null){
-        %>
-        <td class="text-center"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></td>
-        <%
-        } else {
-        %>
-        <td>建设中...</td>
-        <%
-          }
-        %>
 
+        <td class="text-center">
+
+          <%
+            if(session.getAttribute("admin") == null || !(boolean)session.getAttribute("admin")) {
+          %>
+          <button type="button" class="btn btn-success" <%=it.getLayoutImage() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 80%"
+                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%>">查看</button>
+          <%} else { %>
+          <button type="button" class="btn btn-success" <%=it.getLayoutImage() == null ? "disabled=\"disabled\"" : ""%> data-toggle="modal" data-target="#exampleModal" style="width: 45%"
+                  data-name="<%=it.getName()%>" data-image="../../image/download?universityId=<%=it.getId()%>">查看</button>
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#uploadModal" style="width: 45%"
+                  data-name="<%=it.getName()%>" data-id="<%=it.getId()%>"">上传</button>
+          <%}%>
+        </td>
 
         <%
           if(session.getAttribute("admin") == null || !(boolean)session.getAttribute("admin")) {
@@ -90,16 +93,51 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="exampleModalLabel">New message</h4>
+                    <h4 class="modal-title" id="exampleModalLabel"></h4>
                 </div>
                 <div class="modal-body">
                     <img id="page-img" width="100%" height="auto" src=""/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="uploadModalLabel">上传布局图</h4>
+          </div>
+          <div class="modal-body">
+            <form action="image/upload" method="post" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="uName">学校名称</label>
+                <input type="text" class="form-control" id="uName" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="universityId">学校编号</label>
+                <input type="text" name="universityId" class="form-control" id="universityId" readonly="readonly">
+              </div>
+              <div class="form-group">
+                <label for="uploadFile">请选择文件</label>
+                <input type="file" id="uploadFile" name="uploadFile" accept=".jpg,.jpeg,.JPG,.JPEG">
+                <p class="help-block">请上传.jpg,.jpeg,.JPG,.JPEG格式的图片，且务必谨慎，这可能会覆盖原先的图片。</p>
+              </div>
+              <button type="submit" class="btn btn-danger center-block">上传</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </body>
 </html>
