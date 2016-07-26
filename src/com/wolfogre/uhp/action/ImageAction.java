@@ -72,7 +72,7 @@ public class ImageAction  extends ActionSupport {
         }
         fis.close();
 
-        HibernateTool hibernateTool = new HibernateTool();
+        HibernateTool hibernateTool = HibernateTool.getHibernateTool();
         byte[] image = Arrays.copyOfRange(buffer,0, length);
         LayoutImageEntity aimLayout = (LayoutImageEntity)hibernateTool.get(LayoutImageEntity.class, Integer.parseInt(getUniversityId()));
         if(aimLayout != null){
@@ -97,7 +97,7 @@ public class ImageAction  extends ActionSupport {
 
     public String download() throws Exception
     {
-        HibernateTool hibernateTool = new HibernateTool();
+        HibernateTool hibernateTool = HibernateTool.getHibernateTool();;
         LayoutImageEntity aim = (LayoutImageEntity)hibernateTool.get(LayoutImageEntity.class, Integer.parseInt(getUniversityId()));
         this.inputStream = new ByteArrayInputStream(aim.getImage());
         return SUCCESS;

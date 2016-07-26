@@ -20,19 +20,24 @@ public class HibernateTool {
      * 对话工厂
      */
     private SessionFactory sessionFactory;
-    /**
-     * 对话
-     */
-    private Session session;
+
+    static HibernateTool hibernateTool = null;
+
+    public static HibernateTool getHibernateTool(){
+        if(hibernateTool == null){
+            hibernateTool = new HibernateTool();
+            return hibernateTool;
+        } else
+            return hibernateTool;
+    }
 
     /**
      * 构造函数
      */
-    public HibernateTool() {
+    private HibernateTool() {
         Configuration configuration = new Configuration().configure();
         ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
         sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        session = sessionFactory.openSession();
     }
 
     /**
@@ -42,8 +47,11 @@ public class HibernateTool {
      * @return 查询结果
      */
     public List query(Class type, String queryString) {
-        SQLQuery sqlQuery = session.createSQLQuery(queryString).addEntity(type);
-        return sqlQuery.list();
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        List result = session.createSQLQuery(queryString).addEntity(type).list();
+        transaction.commit();
+        return result;
     }
 
     /**
@@ -53,7 +61,11 @@ public class HibernateTool {
      * @return 指定的持久化对象
      */
     public Object get(Class type, Serializable id) throws Exception {
-        return session.get(type, id);
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        Object result = session.get(type, id);
+        transaction.commit();
+        return result;
     }
 
     /**
@@ -62,7 +74,11 @@ public class HibernateTool {
      * @return 指定的持久化对象
      */
     public List getAll(Class type) throws Exception {
-        return session.createQuery("select en from " + type.getSimpleName() + " en").list();
+        Session session = sessionFactory.getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        List result = session.createQuery("select en from " + type.getSimpleName() + " en").list();
+        transaction.commit();
+        return result;
     }
 
     /**
@@ -71,6 +87,7 @@ public class HibernateTool {
      * @return 插入数据库的持久化对象的主键
      */
     public Serializable save(Object obj) {
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         Serializable result = session.save(obj);
         transaction.commit();
@@ -82,22 +99,11 @@ public class HibernateTool {
      * @param obj 需要更新的持久化对象
      */
     public void update(Object obj) {
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         session.update(obj);
         transaction.commit();
     }
-
-    /**
-     * 统计指定的持久化类的持久化对象的个数
-     * @param type 指定的持久化类
-     * @return 个数
-     */
-    public int count(Class type) {
-        Criteria criteria = session.createCriteria(type);
-        criteria.setProjection(Projections.rowCount());
-        return  Integer.parseInt(criteria.uniqueResult().toString());
-    }
-
     /**
      * 释放资源
      * @throws Throwable 释放资源失败
@@ -105,7 +111,6 @@ public class HibernateTool {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        session.close();
         sessionFactory.close();
     }
 }

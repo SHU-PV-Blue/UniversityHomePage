@@ -36,7 +36,7 @@ public class ContentAction extends ActionSupport {
             return null;
         }
 
-        HibernateTool hDao = new HibernateTool();
+        HibernateTool hDao = HibernateTool.getHibernateTool();;
         try{
             HomePageEntity aim = (HomePageEntity)hDao.get(HomePageEntity.class, Integer.parseInt(getId()));
             aim.setContent(getValue());
@@ -52,7 +52,7 @@ public class ContentAction extends ActionSupport {
     }
 
     public String get() throws Exception{
-        HibernateTool hDao = new HibernateTool();
+        HibernateTool hDao = HibernateTool.getHibernateTool();;
         String result = "";
         try{
             result = ((HomePageEntity)hDao.get(HomePageEntity.class, Integer.parseInt(getId()))).getContent();

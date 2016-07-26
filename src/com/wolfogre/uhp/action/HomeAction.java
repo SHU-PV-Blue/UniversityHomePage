@@ -26,7 +26,7 @@ public class HomeAction extends ActionSupport{
 
     public String index() throws Exception{
         ActionContext actionContext = ActionContext.getContext();
-        actionContext.put("universityList", new HibernateTool().getAll(HomePageEntity.class));
+        actionContext.put("universityList", HibernateTool.getHibernateTool().getAll(HomePageEntity.class));
         if(getAdmin() != null && "df8c608611d9139055f0ffb5cd79d0db".equals(getMD5(getAdmin()))
                 || getAdmin() == null && actionContext.getSession().get("admin") != null && (boolean)actionContext.getSession().get("admin"))
             actionContext.getSession().put("admin", true);
